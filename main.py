@@ -52,11 +52,12 @@ option = st.sidebar.selectbox("Choose an option", ["Prediction"])
 if option == "Prediction":
     st.header('Predict Wine Quality')
     
-    fixed_acidity = st.slider('Fixed Acidity', 4.0, 15.0, 7.4)
-    volatile_acidity = st.slider('Volatile Acidity', 0.1, 1.5, 0.7)
-    citric_acid = st.slider('Citric Acid', 0.0, 1.0, 0.0)
-    residual_sugar = st.slider('Residual Sugar', 0.0, 15.0, 1.9)
-    chlorides = st.slider('Chlorides', 0.01, 0.2, 0.076)
+    # Parameter sliders with units
+    fixed_acidity = st.slider('Fixed Acidity (g/dm³)', 4.0, 15.0, 7.4)
+    volatile_acidity = st.slider('Volatile Acidity (g/dm³)', 0.1, 1.5, 0.7)
+    citric_acid = st.slider('Citric Acid (g/dm³)', 0.0, 1.0, 0.0)
+    residual_sugar = st.slider('Residual Sugar (g/dm³)', 0.0, 15.0, 1.9)
+    chlorides = st.slider('Chlorides (g/dm³)', 0.01, 0.2, 0.076)
 
     input_data = pd.DataFrame({
         'fixed acidity': [fixed_acidity],
