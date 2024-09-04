@@ -15,7 +15,7 @@ st.set_page_config(page_title="Wine Quality Prediction", layout="wide")
 # Load the dataset
 @st.cache_data
 def load_data():
-    df = pd.read_csv(r'C:\Users\Jonathan Dabre\Desktop\Project\ML Project\winequality-red.csv')
+    df = pd.read_csv('winequality-red.csv')  # Relative path
     return df
 
 df = load_data()
@@ -52,12 +52,11 @@ option = st.sidebar.selectbox("Choose an option", ["Prediction"])
 if option == "Prediction":
     st.header('Predict Wine Quality')
     
-    # Sidebar for input parameters with units
-    fixed_acidity = st.slider('Fixed Acidity (g/L)', 4.0, 15.0, 7.4)
-    volatile_acidity = st.slider('Volatile Acidity (g/L)', 0.1, 1.5, 0.7)
-    citric_acid = st.slider('Citric Acid (g/L)', 0.0, 1.0, 0.0)
-    residual_sugar = st.slider('Residual Sugar (g/L)', 0.0, 15.0, 1.9)
-    chlorides = st.slider('Chlorides (g/L)', 0.01, 0.2, 0.076)
+    fixed_acidity = st.slider('Fixed Acidity', 4.0, 15.0, 7.4)
+    volatile_acidity = st.slider('Volatile Acidity', 0.1, 1.5, 0.7)
+    citric_acid = st.slider('Citric Acid', 0.0, 1.0, 0.0)
+    residual_sugar = st.slider('Residual Sugar', 0.0, 15.0, 1.9)
+    chlorides = st.slider('Chlorides', 0.01, 0.2, 0.076)
 
     input_data = pd.DataFrame({
         'fixed acidity': [fixed_acidity],
