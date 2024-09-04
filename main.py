@@ -50,7 +50,7 @@ st.title('Wine Quality Prediction')
 # Sidebar for navigation
 # Sidebar for navigation
 st.sidebar.title("Navigation")
-option = st.sidebar.selectbox("Choose an option", ["Prediction", "Comparative Analysis", "Wine Composition", "Important Features"])
+option = st.sidebar.selectbox("Choose an option", ["Prediction", "Comparative Analysis", "Wine Composition", "Important Features", "Taste Information"])
 
 
 if option == "Prediction":
@@ -205,3 +205,38 @@ if option == "Important Features":
     ax.set_xlabel('Quality')
     ax.set_ylabel('Frequency')
     st.pyplot(fig)
+
+
+if option == "Taste Information":
+    st.title('Taste Information')
+
+    # Create a markdown string for the taste information
+    taste_info = """
+    ### Here's a simple breakdown of how each feature in the wine dataset impacts the taste and quality of wine:
+
+    ### 1. **Fixed Acidity**
+    - **What it is:** Fixed acidity refers to the non-volatile acids present in wine, primarily tartaric and malic acid.
+    - **Impact on Taste:** Acidity gives wine its crispness and freshness. If the acidity is too high, the wine might taste sharp or sour. If it's too low, the wine can taste flat. A balanced level of acidity is crucial for a well-rounded flavor.
+
+    ### 2. **Volatile Acidity**
+    - **What it is:** Volatile acidity (VA) mainly consists of acetic acid, which is the acid found in vinegar.
+    - **Impact on Taste:** High levels of volatile acidity can make the wine taste sour or vinegar-like, which is generally undesirable. However, in small amounts, it can add complexity to the wine’s aroma and flavor.
+
+    ### 3. **Citric Acid**
+    - **What it is:** Citric acid is a minor acid in wine that can contribute to the wine's acidity.
+    - **Impact on Taste:** Citric acid can enhance the wine's freshness and contribute to a slightly citrusy flavor. It's typically more noticeable in white wines and can make the wine taste more lively and vibrant.
+
+    ### 4. **Residual Sugar**
+    - **What it is:** Residual sugar (RS) is the sugar left in the wine after fermentation is complete. It can range from virtually zero in dry wines to higher levels in sweet wines.
+    - **Impact on Taste:** Residual sugar adds sweetness to the wine. Dry wines have little to no residual sugar, while sweet wines have a higher amount. The right balance of sugar and acidity is key to a wine's flavor profile.
+
+    ### 5. **Chlorides**
+    - **What it is:** Chlorides refer to the salt content in the wine, typically coming from the soil where the grapes are grown.
+    - **Impact on Taste:** High chloride levels can make wine taste salty, which is generally undesirable. Lower chloride levels are preferred as they help maintain the purity of the wine's flavor without adding any off-tastes.
+
+    ### **Overall Impact on Quality:**
+    Each of these features contributes to the overall balance and complexity of the wine. A well-balanced wine will have the right levels of acidity, sweetness, and flavor compounds without any one element overpowering the others. High-quality wines tend to have a harmonious blend of these features, resulting in a pleasant and enjoyable taste.
+    """
+
+    # Display the taste information
+    st.markdown(taste_info)
