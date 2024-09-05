@@ -10,6 +10,7 @@ from sklearn.neighbors import KNeighborsRegressor
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 import seaborn as sns
 import matplotlib.pyplot as plt
+from popular_wines import popular_wines
 
 # Set page configuration
 st.set_page_config(page_title="Wine Quality Prediction", layout="wide")
@@ -50,7 +51,7 @@ st.title('Wine Quality Prediction')
 # Sidebar for navigation
 # Sidebar for navigation
 st.sidebar.title("Navigation")
-option = st.sidebar.selectbox("Choose an option", ["Prediction", "Comparative Analysis", "Wine Composition", "Important Features", "Taste Information"])
+option = st.sidebar.selectbox("Choose an option", ["Prediction", "Comparative Analysis", "Wine Composition", "Important Features", "Taste Information", "Popular Wines"])
 
 
 if option == "Prediction":
@@ -236,7 +237,61 @@ if option == "Taste Information":
 
     ### **Overall Impact on Quality:**
     Each of these features contributes to the overall balance and complexity of the wine. A well-balanced wine will have the right levels of acidity, sweetness, and flavor compounds without any one element overpowering the others. High-quality wines tend to have a harmonious blend of these features, resulting in a pleasant and enjoyable taste.
+    
+    `Apart from the above there are more features in the wine that can influence the taste and quality of the wine`
+    
+    ### 6. **pH**
+    - **What it is:** pH measures the acidity of the wine. It's a logarithmic scale where lower pH values indicate higher acidity.
+    - **Impact on Taste:** Lower pH wines tend to taste more tart or sharp, while higher pH wines can taste flat or less vibrant. pH influences the overall balance and structure of the wine.
+
+    ### 7. **Sulphates**
+    - **What it is:** Sulphates are a form of sulfur dioxide (SO2), commonly used as a preservative in winemaking.
+    - **Impact on Taste:** Sulphates enhance the wine's flavor and act as an antioxidant, improving the wine's shelf life. Excess sulphates, however, can lead to off-putting flavors or aromas.
+
+    ### 8. **Alcohol**
+    - **What it is:** The alcohol content in wine is a result of the fermentation process, where yeast converts sugars into ethanol.
+    - **Impact on Taste:** Alcohol adds body and warmth to the wine. Higher alcohol levels can make the wine taste heavier or more intense, while lower alcohol wines can taste lighter and more refreshing.
+
+    ### 9. **Density**
+    - **What it is:** Density refers to the wine’s mass relative to its volume, often correlated with sugar and alcohol content.
+    - **Impact on Taste:** Higher density often indicates higher residual sugar, contributing to a sweeter taste. Lower density usually indicates a drier wine.
+
+    ### 10. **Total Sulfur Dioxide**
+    - **What it is:** Total SO2 is the sum of free and bound sulfur dioxide in the wine, which acts as an antioxidant and antimicrobial agent.
+    - **Impact on Taste:** While necessary for preservation, excessive sulfur dioxide can lead to a sharp or pungent taste.
+
+    ### 11. **Free Sulfur Dioxide**
+    - **What it is:** Free SO2 is the portion of sulfur dioxide that remains active in the wine as an antimicrobial.
+    - **Impact on Taste:** High levels can cause the wine to have a chemical or "burnt match" smell and taste.
+
+
     """
 
     # Display the taste information
     st.markdown(taste_info)
+    
+    
+if option == "Popular Wines":
+    st.header("Popular Wines")
+    
+    # Loop through the dictionary and display each wine's information
+    for wine, details in popular_wines.items():
+        st.subheader(wine)
+        
+        # Display wine image
+        if details['image_link']:
+            # Set a maximum width for the images, e.g., 600 pixels
+            st.image(details['image_link'], width=200)
+        
+        # Display wine details
+        st.write(f"**Country:** {details['country']}")
+        st.write(f"**Region:** {details['region']}")
+        st.write(f"**Acidity:** {details['acidity']}")
+        st.write(f"**Alcohol Content:** {details['alcohol_content']}")
+        st.write(f"**Residual Sugar:** {details['residual_sugar']}")
+        st.write(f"**Tasting Notes:** {details['tasting_notes']}")
+        
+        # Button to visit the shop
+        if details['shop_link']:
+            if st.button(f"Buy {wine}"):
+                st.markdown(f"[Purchase Here]({details['shop_link']})")
