@@ -95,7 +95,7 @@ def query_gemini(prompt):
 
 # Chatbot UI implementation (no chat history)
 def chatbot_page():
-    st.title("Gemini AI Chatbot")
+    st.title("w-AI-ne QNAbot")
 
     # User input
     user_input = st.text_input("You: ", "")
