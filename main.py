@@ -12,8 +12,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from popular_wines import popular_wines
 import requests
-import os
-from dotenv import load_dotenv
+# import os
+# from dotenv import load_dotenv
 
 
 
@@ -21,8 +21,10 @@ from dotenv import load_dotenv
 st.set_page_config(page_title="Wine Quality Prediction", layout="wide")
 
 # Load environment variables from .env file
-load_dotenv()
-api_key = os.getenv("GEMINI_API_KEY")
+# load_dotenv()
+# api_key = os.getenv("GEMINI_API_KEY")
+
+api_key = st.secrets["GEMINI_API_KEY"]
 
 
 # Load the dataset
