@@ -11,9 +11,19 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 import seaborn as sns
 import matplotlib.pyplot as plt
 from popular_wines import popular_wines
+import requests
+import os
+from dotenv import load_dotenv
+
+
 
 # Set page configuration
 st.set_page_config(page_title="Wine Quality Prediction", layout="wide")
+
+# Load environment variables from .env file
+load_dotenv()
+api_key = os.getenv("GEMINI_API_KEY")
+
 
 # Load the dataset
 @st.cache_data
@@ -44,6 +54,57 @@ models = {
 
 for model_name, model in models.items():
     model.fit(X_train, y_train)
+    
+
+# Function to query the Gemini API
+def query_gemini(prompt):
+    api_url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent"
+
+    headers = {
+        "Content-Type": "application/json",
+    }
+
+    data = {
+        "contents": [
+            {
+                "parts": [
+                    {
+                        "text": f"Hey you are a chatbot in a Wine related application, the question is: {prompt}. (If you feel the question is related to wines then only answer, or else say 'The question doesn't seem to be related to Wines')"
+                    }
+                ]
+            }
+        ]
+    }
+
+    response = requests.post(api_url, headers=headers, json=data, params={"key": api_key})
+    
+    # Debugging: Print the response content
+    print("Response Status Code:", response.status_code)
+    print("Response Content:", response.text)  # This will show the full response for debugging
+
+    if response.status_code == 200:
+        # Attempt to parse the response and extract the text
+        try:
+            return response.json()["candidates"][0]["content"]["parts"][0]["text"]
+        except KeyError as e:
+            return f"Error: Missing key in response - {e}"
+    else:
+        return f"Error: {response.text}"
+
+# Chatbot UI implementation (no chat history)
+def chatbot_page():
+    st.title("Gemini AI Chatbot")
+
+    # User input
+    user_input = st.text_input("You: ", "")
+
+    if st.button("Send"):
+        if user_input:
+            # Query the Gemini API
+            bot_response = query_gemini(user_input)
+
+            # Display bot response without chat history
+            st.write(f"Bot: {bot_response}")
 
 # Streamlit application
 st.title('Wine Quality Prediction')
@@ -51,7 +112,7 @@ st.title('Wine Quality Prediction')
 # Sidebar for navigation
 # Sidebar for navigation
 st.sidebar.title("Navigation")
-option = st.sidebar.selectbox("Choose an option", ["Prediction", "Comparative Analysis", "Wine Composition", "Important Features", "Taste Information", "Popular Wines"])
+option = st.sidebar.selectbox("Choose an option", ["Prediction", "Comparative Analysis", "Wine Composition", "Important Features", "Taste Information", "Popular Wines", "Chatbot"])
 
 
 if option == "Prediction":
@@ -295,3 +356,7 @@ if option == "Popular Wines":
         if details['shop_link']:
             if st.button(f"Buy {wine}"):
                 st.markdown(f"[Purchase Here]({details['shop_link']})")
+                
+
+if option == "Chatbot":
+        chatbot_page()  # Load the chatbot UI
